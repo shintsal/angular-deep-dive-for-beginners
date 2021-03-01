@@ -5,6 +5,7 @@ import { Course } from '../../app/model/course';
 import { EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { FaLayersComponent } from '@fortawesome/angular-fontawesome';
+import { CoursesService } from '../services/courses.service';
 
 @Component({
   selector: 'course-card',
@@ -19,12 +20,17 @@ export class CourseCardComponent implements OnInit {
   @Input()
   cardIndex: number;
 
-  @Output('CourseSelected')
+  @Output('courseChanged')
   courseEmitter = new EventEmitter<Course>();
 
-  constructor() { }
+  constructor(private CoursesService: CoursesService) { }
 
   ngOnInit(): void {
+    console.log("coursesServices course card", this.CoursesService);
+  }
+
+  onSaveClicked(description:string) {
+    this.courseEmitter.emit({...this.course, description});
   }
 
   isImageVisible() {
